@@ -1,0 +1,39 @@
+name: Run Tests on Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main  # Change this to your target branch if needed
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4  # Fetches the latest code
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18  # Use the version your project requires
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Cypress Tests
+        run: npx cypress run
+
+      - name: Upload Cypress Screenshots (Optional)
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - name: Upload Test Results (Optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: cypress/videos

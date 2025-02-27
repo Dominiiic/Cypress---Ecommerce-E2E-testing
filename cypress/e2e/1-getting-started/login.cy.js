@@ -11,6 +11,7 @@ describe('Ecommerce Login', () => {
     cy.get("input[name='password']").type("taylorslow")
     cy.get('button').contains('Sign in').click()
     cy.get("div[role='status']").contains("Successful login");
+    cy.argosScreenshot("homepage");
   })
 
 })

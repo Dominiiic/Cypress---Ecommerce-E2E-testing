@@ -37,6 +37,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "argos-cli": "^0.4.0",
     "autoprefixer": "^10.0.1",
     "cypress": "^14.1.0",
     "daisyui": "^4.7.2",

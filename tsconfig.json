@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["cypress", "@argos-ci/cypress/support"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
