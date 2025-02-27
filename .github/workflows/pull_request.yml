@@ -1,0 +1,40 @@
+name: Run Tests on Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main  # Change this to match your target branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18  # Change if needed
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Start Local Server
+        run: npm run dev &  # Starts the server in the background
+
+      - name: Wait for Server to be Ready
+        run: |
+          npx wait-on http://localhost:3000  # Waits until the server is up
+
+      - name: Run Cypress Tests
+        run: npx cypress run
+
+      - name: Upload Cypress Screenshots (If Fails)
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
